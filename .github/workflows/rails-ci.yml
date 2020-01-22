@@ -9,7 +9,6 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     services:
@@ -20,7 +19,7 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
 
     - name: Set up Ruby 2.7
       uses: actions/setup-ruby@v1
@@ -34,7 +33,12 @@ jobs:
       run: sudo apt-get install libpq-dev
 
     - name: Build
-      run: bundle install --jobs 4 --retry 3
+      run: bundle install --jobs 4 --retry 3 --path vendor/bundle
+
+    - uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-bundle-${{ hashFiles('**/Gemfile.lock') }}
 
     - name: Setup Database
       run: |
