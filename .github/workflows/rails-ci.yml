@@ -33,6 +33,13 @@ jobs:
     - name: Install dependent libralies
       run: apt-get install libpq-dev
 
+    - name: Install Latest Google Chrome
+      run: |
+        wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+        echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' | tee /etc/apt/sources.list.d/google-chrome.list
+        apt update -y
+        apt install -y google-chrome-stable
+
     - name: Build
       run: bundle install --jobs 4 --retry 3 --path vendor/bundle
 
