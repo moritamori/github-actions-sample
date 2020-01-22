@@ -5,6 +5,7 @@ on: [push]
 env:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
+  POSTGRES_HOST: postgres
   RAILS_ENV: test
 
 jobs:
@@ -38,8 +39,8 @@ jobs:
     - name: Setup Database
       run: |
         cp config/database.yml.github-actions config/database.yml
-        bundle exec rake db:create
-        bundle exec rake db:schema:load
+        bin/rails db:create
+        bin/rails db:schema:load
 
     - name: Run rspec
-      run: COVERAGE=true bin/rails rspec  --require rails_helper
+      run: COVERAGE=true bundle exec rspec --require rails_helper
