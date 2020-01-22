@@ -18,6 +18,9 @@ jobs:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
+    container:
+      image: ruby:2.7
+
     steps:
     - uses: actions/checkout@v2
 
@@ -26,13 +29,8 @@ jobs:
         path: vendor/bundle
         key: ${{ runner.os }}-bundle-${{ hashFiles('**/Gemfile.lock') }}
 
-    - name: Set up Ruby 2.7
-      uses: actions/setup-ruby@v1
-      with:
-        ruby-version: 2.7
-
     - name: Install dependent libralies
-      run: sudo apt-get install libpq-dev
+      run: apt-get install libpq-dev
 
     - name: Build
       run: bundle install --jobs 4 --retry 3 --path vendor/bundle
