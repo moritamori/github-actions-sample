@@ -42,4 +42,4 @@ jobs:
         bundle exec rake db:schema:load
 
     - name: Run rspec
-      run: COVERAGE=true bundle exec rspec  --require rails_helper
+      run: COVERAGE=true bin/rails rspec  --require rails_helper
