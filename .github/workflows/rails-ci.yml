@@ -26,9 +26,6 @@ jobs:
       with:
         ruby-version: 2.7
 
-    - name: install bundler2
-      run: gem install bundler
-
     - name: Install dependent libralies
       run: sudo apt-get install libpq-dev
 
